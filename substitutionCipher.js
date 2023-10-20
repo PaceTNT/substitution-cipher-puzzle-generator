@@ -132,12 +132,11 @@ function findMinimalWordsList(wordList, lettersList) {
         const word = findWordThatMatchesMostLetters(wordList, lettersList);
         minimalWordList.push(word);
         const index = wordList.indexOf(word);
-        if (index > -1) { // only splice array when item is found
-            wordList.splice(index, 1); // 2nd parameter means remove one item only
+        if (index > -1) {
+            wordList.splice(index, 1);
         }
 
         lettersList = getListOfLettersMinusThoseInWord(word, lettersList);
-        //alert(word + "\n" + wordList.toString() + "\n" + lettersList.toString());
     }
 
     if(lettersList.length > 0){
@@ -217,7 +216,7 @@ function addPictogramToDiv(parentDiv, word, inputSubstituionShift) {
     const pictogramDiv = document.createElement('div');
     pictogramDiv.setAttribute("class", "pictogramDiv");
     const img = document.createElement('img');
-    img.src = "pictograms/" + word + ".jpg";
+    img.src = "pictograms/" + word.toLowerCase() + ".jpg";
     pictogramDiv.appendChild(img);
     table.appendChild(pictogramDiv);
 
