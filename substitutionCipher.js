@@ -233,7 +233,7 @@ function addPictogramToDiv(parentDiv, word, inputSubstituionShift) {
 }
 
 function getShiftedLetter(letter, shift){
-    var outputLetter = "_blank";
+    var outputLetter = "blank";
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const index = alphabet.indexOf(letter);
     if(index >= 0){
