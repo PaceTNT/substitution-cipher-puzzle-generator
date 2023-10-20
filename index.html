@@ -14,6 +14,53 @@
     </div>
 
     <div class="container">
+        <div class="accordion" id="explanatoryText">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    What does this page do?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        It generates a simple puzzle for use in roleplaying games based on your inputs.
+                        <br><br>
+                        You provide an input phrase, optionally specifying "disallowed letters" (to make solving harder) and a "shift" (to offset which glyphs are used). When you click "submit" it 
+                        displays an encoding of the input phrase and a set of pictograms that contain the letters needed to decode the input.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Do you have any advice or examples?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                    Yes!
+                    <li> I like making the input phrase a riddle (so players first need to decode the phrase, then solve the riddle).</li>
+                    <li> However, don't make the riddle too difficult, and make sure you have a backup plan for how to provide hints if the players get stuck.</li>
+                    <li> Conversely, don't make it too easy. Consider the order in which you provide the pictograms. Once you get a few key letters, it quickly becomes a game of "Wheel of Fortune", and you might not need the other pictograms to decode it.
+                    (this is where using "disallowed letters" can help). However, if someone is great at word games, this can give them a nice opportunity to show off and have fun... so that's a good outcome too.</li>
+                    <br>
+                    <strong>Example:</strong> Characters are exploring a forgotten temple to a no-longer-worshipped god of Luck and Death, and find a stone door with no obvious opening mechanism. The door has a riddle engraved on it:
+                    <li> Brought to the table </li>
+                    <li> Cut and served</li>
+                    <li> Never eaten</li>
+                    ... with the answer being "cards".<br>
+                    If the players had gotten stuck, the intent was to remind them of the decor related to games of chance with death on the line. In a worst-case scenario, one of the games depicted would feature a deck of cards.<br>
+                    Once the characters answer the riddle, the stone door extrudes a shelf that holds a deck of playing cards with a set of card-sized depressions alongside. Each depression contains a carving of one of the characters.
+                    The characters get the overwhelming sensation that they must each draw at least one card from the deck and place it in the depression to open the door. 
+                    In this specific case (a one-shot adventure)... it was a <a href="https://roll20.net/compendium/dnd5e/Deck%20of%20Many%20Things#content">Deck of Many Things</a>, leaving the possibility that things could go truly, horribly wrong. :)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="container">
         <form id="myInputForm" onsubmit="return processMyInput(this)">
             <div class = "row">
                 <label for="inputPhrase">Input Phrase:</label><br>
