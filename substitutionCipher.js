@@ -40,6 +40,7 @@ const pictogramList = [
     "queen",
     "snow",
     "violin",
+    "kangaroo",
 ];
 
 function processMyInput(formData) {
