@@ -41,6 +41,17 @@ const pictogramList = [
     "snow",
     "violin",
     "kangaroo",
+    "bull",
+    "crab",
+    "dolphin",
+    "boat",
+    "book",
+    "fly",
+    "fork",
+    "spoon",
+    "archer",
+    "sad",
+    "happy",
 ];
 
 function processMyInput(formData) {
