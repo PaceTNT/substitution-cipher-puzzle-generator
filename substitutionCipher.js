@@ -78,6 +78,13 @@ function processMyInput(formData) {
     displayOutputPhrase(inputPhraseString, disallowedLettersList);
     displayEncodedPhrase(inputPhraseString, inputSubstituionShift);
     displayPictograms(wordsContainingNeededLetters, inputSubstituionShift);
+
+    updateURLParams({
+        phrase: inputPhraseString,
+        disallowed: inputDisallowedLettersString,
+        shift: inputSubstituionShift
+    });
+
     return false;
 }
 
@@ -311,3 +318,33 @@ function clearInput() {
     document.getElementById('substitutionShift').value = "0";
     clearImages();
 }
+
+function updateURLParams(params) {
+    const url = new URL(window.location.href);
+    for (const key in params) {
+        url.searchParams.set(key, params[key]);
+    }
+    window.history.replaceState({}, '', url.toString()); // Update the URL without reloading
+}
+
+function loadURLParams() {
+    const url = new URL(window.location.href);
+    const phrase = url.searchParams.get('phrase');
+    const disallowed = url.searchParams.get('disallowed');
+    const shift = url.searchParams.get('shift');
+
+    if (phrase) {
+        document.getElementById('inputPhrase').value = phrase;
+    }
+    if (disallowed) {
+        document.getElementById('disallowedLetters').value = disallowed;
+    }
+    if (shift) {
+        document.getElementById('substitutionShift').value = shift;
+    }
+
+    processMyInput(null); // Re-run the processing with loaded parameters
+}
+
+// Call loadURLParams when the page loads
+window.onload = loadURLParams;
