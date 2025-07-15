@@ -55,16 +55,16 @@ const pictogramList = [
 ];
 
 function processMyInput(formData) {
-    var inputPhraseString = (document.getElementById('inputPhrase').value).toUpperCase();
-    var inputDisallowedLettersString = (document.getElementById('disallowedLetters').value).toUpperCase();
-    var inputSubstituionShift = (document.getElementById('substitutionShift').value);
-    var validationErrors = "";
+    const inputPhraseString = (document.getElementById('inputPhrase').value).toUpperCase();
+    const inputDisallowedLettersString = (document.getElementById('disallowedLetters').value).toUpperCase();
+    const inputSubstitutionShift = (document.getElementById('substitutionShift').value);
+    let validationErrors = "";
 
     validationErrors += validateInputPhrase(inputPhraseString);
     validationErrors += validateDisallowedLetters(inputDisallowedLettersString);
 
     if (validationErrors.length > 0) {
-        alert(validationErrors);
+        showErrorMessage(validationErrors);
         return false;
     }
 
@@ -76,24 +76,75 @@ function processMyInput(formData) {
 
     clearImages();
     displayOutputPhrase(inputPhraseString, disallowedLettersList);
-    displayEncodedPhrase(inputPhraseString, inputSubstituionShift);
-    displayPictograms(wordsContainingNeededLetters, inputSubstituionShift);
+    displayEncodedPhrase(inputPhraseString, inputSubstitutionShift);
+    displayPictograms(wordsContainingNeededLetters, inputSubstitutionShift);
 
     updateURLParams({
         phrase: inputPhraseString,
         disallowed: inputDisallowedLettersString,
-        shift: inputSubstituionShift
+        shift: inputSubstitutionShift
     });
 
     return false;
 }
 
 function validateInputPhrase(inputPhraseString) {
-    return "";
+    let errors = "";
+    
+    if (!inputPhraseString || inputPhraseString.trim().length === 0) {
+        errors += "Input phrase cannot be empty.\n";
+        return errors;
+    }
+    
+    // Check if phrase contains at least one letter
+    const hasLetters = /[A-Za-z]/.test(inputPhraseString);
+    if (!hasLetters) {
+        errors += "Input phrase must contain at least one letter.\n";
+    }
+    
+    // Check for reasonable length (not too long for display)
+    if (inputPhraseString.length > 500) {
+        errors += "Input phrase is too long (maximum 500 characters).\n";
+    }
+    
+    return errors;
 }
 
 function validateDisallowedLetters(inputDisallowedLettersString) {
-    return "";
+    let errors = "";
+    
+    if (inputDisallowedLettersString.trim().length === 0) {
+        return errors; // Empty is allowed
+    }
+    
+    // Remove spaces and commas, then check if all characters are letters
+    const cleanedInput = inputDisallowedLettersString.replace(/[,\s]/g, '');
+    const invalidChars = cleanedInput.match(/[^A-Za-z]/g);
+    
+    if (invalidChars) {
+        errors += `Invalid characters in disallowed letters: ${[...new Set(invalidChars)].join(', ')}\n`;
+    }
+    
+    // Check if disallowed letters would eliminate all pictograms
+    const disallowedLettersList = listOfUniqueLetters(inputDisallowedLettersString);
+    const wordsWithoutDisallowedLetters = listOfWordsWithoutLetters(pictogramList, disallowedLettersList);
+    
+    if (wordsWithoutDisallowedLetters.length === 0) {
+        errors += "Disallowed letters eliminate all available pictograms. Please reduce the number of disallowed letters.\n";
+    }
+    
+    return errors;
+}
+
+/**
+ * Display error message to user with better formatting than alert
+ * @param {string} message - The error message to display
+ */
+function showErrorMessage(message) {
+    // For now, use alert but format the message better
+    // TODO: Replace with a proper modal or toast notification
+    const formattedMessage = "Please fix the following issues:\n\n" + message;
+    alert(formattedMessage);
 }
 
 function listOfUniqueLetters(inputString, disallowedLettersString = "") {
@@ -220,15 +271,15 @@ function displayOutputPhrase(inputPhraseString, disallowedLettersList){
     }
 }
 
-function displayPictograms(wordsList, inputSubstituionShift) {
+function displayPictograms(wordsList, inputSubstitutionShift) {
     const pictogramDiv = document.getElementById('pictogramDiv');
 
     for (let i = 0; i < wordsList.length; i++) {
-        addPictogramToDiv(pictogramDiv, wordsList[i], inputSubstituionShift);
+        addPictogramToDiv(pictogramDiv, wordsList[i], inputSubstitutionShift);
     }
 }
 
-function addPictogramToDiv(parentDiv, word, inputSubstituionShift) {
+function addPictogramToDiv(parentDiv, word, inputSubstitutionShift) {
     const table = document.createElement('table');
     table.setAttribute("border", "2");
 
@@ -236,6 +287,7 @@ function addPictogramToDiv(parentDiv, word, inputSubstituionShift) {
     pictogramDiv.setAttribute("class", "pictogramDiv");
     const img = document.createElement('img');
     img.src = "pictograms/" + word.toLowerCase() + ".jpg";
+    img.alt = `Pictogram for ${word}`;
     pictogramDiv.appendChild(img);
     table.appendChild(pictogramDiv);
 
@@ -243,8 +295,9 @@ function addPictogramToDiv(parentDiv, word, inputSubstituionShift) {
     labelDiv.setAttribute("class", "pictogramDiv");
     for(let i = 0; i < word.length; i++){
         const labelImg = document.createElement('img');      
-        var shiftedLetter = getShiftedLetter(word[i], inputSubstituionShift);
+        const shiftedLetter = getShiftedLetter(word[i], inputSubstitutionShift);
         labelImg.src = "glyphs/" + shiftedLetter + ".jpg";
+        labelImg.alt = `Glyph for letter ${shiftedLetter}`;
         labelDiv.appendChild(labelImg);
     }
     table.appendChild(labelDiv);
@@ -277,25 +330,31 @@ function addExtraSpaces(inputPhraseString){
     return outputString;
 }
 
-function displayEncodedPhrase(inputPhraseString, inputSubstituionShift){
-    const encodedOutputTable = document.getElementById('encodedOutputContainer');
+function displayEncodedPhrase(inputPhraseString, inputSubstitutionShift){
+    const encodedOutputContainer = document.getElementById('encodedOutputContainer');
+    
+    // Create a table element inside the container
+    const encodedOutputTable = document.createElement('table');
+    encodedOutputTable.setAttribute('class', 'encoded-phrase-table');
+    encodedOutputContainer.appendChild(encodedOutputTable);
 
     const extraSpacesAdded = addExtraSpaces(inputPhraseString);
 
-    var row = encodedOutputTable.insertRow();
-    for(i = 0; i < extraSpacesAdded.length; i++){
+    let row = encodedOutputTable.insertRow();
+    for(let i = 0; i < extraSpacesAdded.length; i++){
         if(extraSpacesAdded[i] == "\n"){
             row = encodedOutputTable.insertRow();
             continue;
         }
-        var labelCell = row.insertCell();
+        const labelCell = row.insertCell();
         labelCell.setAttribute("class", "encodedOutputCell");
         
         const labelImg = document.createElement('img');
         labelImg.setAttribute("class", "glyph");
 
-        var shiftedLetter = getShiftedLetter(extraSpacesAdded[i], inputSubstituionShift);
+        const shiftedLetter = getShiftedLetter(extraSpacesAdded[i], inputSubstitutionShift);
         labelImg.src = "glyphs/" + shiftedLetter + ".jpg";
+        labelImg.alt = `Glyph for letter ${shiftedLetter}`;
         labelCell.appendChild(labelImg);
     }
 }

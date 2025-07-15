@@ -61,47 +61,91 @@
     <br>
 
     <div class="container">
-        <form id="myInputForm" onsubmit="return processMyInput(this)">
-            <div class = "row">
-                <label for="inputPhrase">Input Phrase:</label><br>
-                <textarea name="Input Phrase" id="inputPhrase" style="width:100%;height:75px;">brought to the table
+        <form id="myInputForm" onsubmit="return processMyInput(this)" role="form" aria-label="Cipher puzzle generator form">
+            <div class="form-group">
+                <label for="inputPhrase">Input Phrase:</label>
+                <textarea 
+                    name="Input Phrase" 
+                    id="inputPhrase" 
+                    style="width:100%;height:100px;"
+                    placeholder="Enter the phrase you want to encode..."
+                    aria-describedby="inputPhraseHelp">brought to the table
 cut and served
-never eaten</textarea><br>
+never eaten</textarea>
+                <small id="inputPhraseHelp" class="form-text text-muted">
+                    Enter the text you want to convert into a cipher puzzle.
+                </small>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="disallowedLetters">Disallowed Letters:</label>
+                        <input 
+                            type="text" 
+                            id="disallowedLetters" 
+                            name="Disallowed Letters" 
+                            value="b, u, h, e, c, d, v"
+                            placeholder="e.g., a, e, i, o, u"
+                            aria-describedby="disallowedLettersHelp">
+                        <small id="disallowedLettersHelp" class="form-text text-muted">
+                            Letters to hide from the output (comma-separated).
+                        </small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="substitutionShift">Substitution Shift:</label>
+                        <input 
+                            type="number" 
+                            id="substitutionShift" 
+                            name="Substitution Shift" 
+                            value="0" 
+                            min="0" 
+                            max="25"
+                            aria-describedby="substitutionShiftHelp">
+                        <small id="substitutionShiftHelp" class="form-text text-muted">
+                            Number of positions to shift letters (0-25).
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="submit" value="Generate Puzzle" class="btn btn-primary">
+                </div>
+                <div class="col-md-6">
+                    <input type="reset" value="Reset Form" class="btn btn-secondary" onclick="clearInput()">
+                </div>
             </div>
 
             <br>
-
-            <div class = "row">
-                <div class = "col">
-                    <label for="disallowedLetters">Disallowed Letters:</label><br>
-                    <input type="text" id="disallowedLetters" name="Disallowed Letters" value="b, u, h, e, c, d, v"><br>
-                </div>
-                <div class = "col">
-                    <label for="substituionShift">Substitution Shift:</label><br>
-                    <input type="number" id="substitutionShift" name="Substituion Shift" value="0" min="0" max="25"><br>
-                </div>
+            <div class="form-group">
+                <label for="outputPhrase">Output Phrase:</label>
+                <textarea 
+                    name="Output Phrase" 
+                    id="outputPhrase" 
+                    style="width:100%;height:100px;" 
+                    readonly
+                    aria-describedby="outputPhraseHelp"></textarea>
+                <small id="outputPhraseHelp" class="form-text text-muted">
+                    This shows your input phrase with disallowed letters replaced by underscores.
+                </small>
             </div>
-
-            <div class = "row">
-                <div class = "col"><input type="submit" value="Submit"></div>
-                <div class = "col"><input type="reset" value="Reset"></div>
-            </div>
-
-            <br>
-
-            <div class = "row">
-                <label for="outputPhrase">Output Phrase (shows disallowed letters):</label><br>
-                <textarea name="Output Phrase" id="outputPhrase" style="width:100%;height:75px;" readonly></textarea><br>
-            </div>
-
         </form>
 
-        <br>
-        <label for="encodedOutputContainer">Encoded Output:</label>
-        <table id="encodedOutputContainer"></table>
-        <br>
-        <label for="pictogramDiv">Pictograms Containing Needed Letters:</label>
-        <div class="container" id="pictogramDiv"></div>
+        <div class="output-section">
+            <h3>
+                <label for="encodedOutputContainer">Encoded Output:</label>
+            </h3>
+            <div id="encodedOutputContainer" role="img" aria-label="Encoded phrase using cipher glyphs"></div>
+            
+            <h3>
+                <label for="pictogramDiv">Pictograms Containing Needed Letters:</label>
+            </h3>
+            <div id="pictogramDiv" role="region" aria-label="Pictograms with cipher keys"></div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
