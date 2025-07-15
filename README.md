@@ -13,6 +13,7 @@ A web-based tool for creating substitution cipher puzzles for tabletop roleplayi
   - Encoded phrase displayed using custom glyph images
   - Pictogram cards showing the letters needed for decoding
   - Preview of output with disallowed letters masked
+- **Print-Friendly Output**: Professional two-page puzzle format optimized for printing
 - **Accessibility**: Screen reader support and keyboard navigation
 - **URL Sharing**: Share puzzle configurations via URL parameters
 
@@ -30,6 +31,7 @@ A web-based tool for creating substitution cipher puzzles for tabletop roleplayi
 - ✅ **Responsive Design**: Mobile-friendly layout and styling
 - ✅ **Visual Enhancements**: Better spacing, colors, and visual hierarchy
 - ✅ **Form Improvements**: Help text, placeholders, and better button styling
+- ✅ **Print Functionality**: Professional print layout with dedicated print button
 - ✅ **Loading States**: Prepared infrastructure for loading indicators
 
 ### Performance & Security
@@ -43,7 +45,18 @@ A web-based tool for creating substitution cipher puzzles for tabletop roleplayi
 2. **Set Disallowed Letters**: Specify letters to hide from the output (optional)
 3. **Choose Shift Value**: Set a Caesar cipher shift (0-25) for additional encoding
 4. **Generate Puzzle**: Click "Generate Puzzle" to create your cipher
-5. **Share Results**: Use the generated URL to share your puzzle configuration
+5. **Print Puzzle**: Click the "🖨️ Print Puzzle" button for a clean, two-page printout
+6. **Share Results**: Use the generated URL to share your puzzle configuration
+
+### Print Features
+
+The application includes comprehensive print optimization:
+- **Page 1**: Title and encoded cipher puzzle
+- **Page 2**: Pictograms with decoding keys
+- **Clean Layout**: Hides interactive elements, optimized spacing and fonts
+- **Professional Format**: Letter-size pages with proper margins
+- **High Contrast**: Black text and borders for clear printing
+- **Transparent Backgrounds**: Images optimized for print quality
 
 ### Example Use Case
 
@@ -95,7 +108,7 @@ Simply open `index.html` in a web browser. No build process or server required.
 - [ ] Add loading indicators for better UX
 - [ ] Implement save/load functionality
 - [ ] Add support for additional cipher types
-- [ ] Create print-friendly output format
+- [x] Create print-friendly output format
 - [ ] Add unit tests for core functions
 
 ## License

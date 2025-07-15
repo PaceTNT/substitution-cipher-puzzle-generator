@@ -79,6 +79,12 @@ function processMyInput(formData) {
     displayEncodedPhrase(inputPhraseString, inputSubstitutionShift);
     displayPictograms(wordsContainingNeededLetters, inputSubstitutionShift);
 
+    // Show the print button after puzzle is generated
+    const printButton = document.getElementById('printButton');
+    if (printButton) {
+        printButton.style.display = 'inline-block';
+    }
+
     updateURLParams({
         phrase: inputPhraseString,
         disallowed: inputDisallowedLettersString,
@@ -376,6 +382,12 @@ function clearInput() {
     document.getElementById('disallowedLetters').value = "";
     document.getElementById('substitutionShift').value = "0";
     clearImages();
+    
+    // Hide the print button when form is cleared
+    const printButton = document.getElementById('printButton');
+    if (printButton) {
+        printButton.style.display = 'none';
+    }
 }
 
 function updateURLParams(params) {

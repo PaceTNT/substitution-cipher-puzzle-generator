@@ -201,3 +201,296 @@ img {
     border-radius: 4px;
     margin: 10px 0;
 }
+
+/* Print-friendly styles */
+@media print {
+    /* Hide elements that shouldn't be printed */
+    .accordion,
+    #myInputForm,
+    input[type="submit"],
+    input[type="reset"],
+    .btn,
+    .form-text,
+    .accordion-button,
+    .accordion-body,
+    .accordion-item,
+    .accordion-header,
+    #explanatoryText {
+        display: none !important;
+    }
+    
+    /* Reset page margins and padding for better use of space */
+    @page {
+        margin: 0.5in;
+        size: letter;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+        color: #000;
+        background: white;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Main container adjustments */
+    .container {
+        max-width: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Title styling for print */
+    h1 {
+        font-size: 18pt;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20pt;
+        page-break-after: avoid;
+        color: #000;
+    }
+    
+    /* Section headers */
+    h3 {
+        font-size: 14pt;
+        font-weight: bold;
+        margin-top: 20pt;
+        margin-bottom: 10pt;
+        page-break-after: avoid;
+        color: #000;
+    }
+    
+    /* Output phrase styling for print */
+    #outputPhrase {
+        background-color: transparent;
+        border: 2px solid #000;
+        font-family: 'Courier New', monospace;
+        font-size: 14pt;
+        letter-spacing: 1pt;
+        padding: 10pt;
+        margin: 10pt 0;
+        color: #000;
+        page-break-inside: avoid;
+    }
+    
+    /* Encoded output container */
+    #encodedOutputContainer {
+        padding: 15pt;
+        /*border: 2px solid #000;*/
+        margin: 15pt 0;
+        page-break-inside: avoid;
+        background: white;
+    }
+    
+    /* Table styling for print */
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10pt;
+        margin: 10pt auto;
+        page-break-inside: avoid;
+        background: white;
+        box-shadow: none;
+    }
+    
+    td, tr {
+        padding: 4pt;
+        border: none;
+    }
+    
+    /* Glyph images in encoded output */
+    .glyph {
+        width: 30pt;
+        height: 30pt;
+        object-fit: contain;
+    }
+    
+    /* Pictogram section */
+    #pictogramDiv {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15pt;
+        padding: 20pt 0;
+        page-break-inside: avoid;
+    }
+    
+    /* Individual pictogram containers */
+    .pictogramDiv {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 10pt;
+        margin: 5pt;
+        page-break-inside: avoid;
+        background: white;
+        flex-wrap: wrap;
+    }
+    
+    /* Ensure pictogram tables stack vertically but glyphs within each pictogram are horizontal */
+    table .pictogramDiv:first-child {
+        flex-direction: column;
+        margin-bottom: 5pt;
+    }
+    
+    table .pictogramDiv:last-child {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    /* Pictogram images */
+    .pictogramImage {
+        max-width: 120pt;
+        max-height: 120pt;
+    }
+    
+    /* Pictogram label glyphs */
+    .pictogramDiv img[src*="glyphs/"] {
+        width: 25pt;
+        height: 25pt;
+        object-fit: contain;
+        margin-top: 5pt;
+    }
+    
+    /* General image adjustments for print */
+    img {
+        max-width: 100%;
+        height: auto;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+    }
+    
+    /* Force black text and remove shadows/effects, but be selective about backgrounds */
+    * {
+        color: #000 !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
+    }
+    
+    /* Set white backgrounds only for specific containers, not all elements */
+    body, .container, #encodedOutputContainer, table {
+        background: white !important;
+    }
+    
+    /* Ensure all images have transparent backgrounds with multiple overrides */
+    img {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+    
+    /* Specific overrides for glyph images */
+    .glyph {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+    }
+    
+    /* Specific overrides for pictogram images */
+    .pictogramDiv img {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+    }
+    
+    /* Ensure table cells have transparent backgrounds */
+    td, tr {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    
+    /* Pictogram containers should have white backgrounds but not affect images */
+    .pictogramDiv {
+        background: white !important;
+        background-color: white !important;
+    }
+    
+    /* Override any potential Bootstrap or other framework backgrounds */
+    .pictogramDiv img[src*="glyphs/"],
+    .pictogramDiv img[src*="pictograms/"],
+    img[src*="glyphs/"],
+    img[src*="pictograms/"] {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+    }
+    
+    /* Labels for sections */
+    label {
+        font-weight: bold;
+        font-size: 12pt;
+        color: #000;
+        margin-bottom: 5pt;
+    }
+    
+    /* Prevent orphaned content */
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+    }
+    
+    /* Ensure pictograms don't break across pages */
+    .pictogramDiv {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    /* Reduce spacing to help encoded output fit on first page */
+    .output-section h3:first-of-type {
+        page-break-before: avoid;
+        margin-top: 10pt;
+        margin-bottom: 8pt;
+    }
+    
+    /* Ensure encoded output container stays on first page */
+    #encodedOutputContainer {
+        page-break-before: avoid;
+        page-break-after: avoid;
+        margin-top: 5pt;
+        margin-bottom: 10pt;
+    }
+    
+    /* Fallback for browsers that don't support :has() */
+    .output-section h3:first-of-type {
+        page-break-before: avoid;
+        page-break-after: avoid;
+        margin-top: 10pt;
+        margin-bottom: 5pt;
+    }
+
+    /* Force pictogram section to start on new page but keep heading with content */
+    .output-section h3:has(label[for="pictogramDiv"]) {
+        page-break-before: always;
+        page-break-after: avoid;
+        margin-top: 10pt;
+        margin-bottom: 5pt;
+    }   
+   
+    /* Reduce title bottom margin to make more room for encoded output */
+    h1 {
+        margin-bottom: 15pt !important;
+    }
+    
+    /* Ensure pictogram section stays with its heading */
+    #pictogramDiv {
+        page-break-before: avoid;
+        margin-top: 0;
+        padding-top: 10pt;
+    }
+    
+    /* Reduce pictogram container spacing to help fit more on page */
+    .pictogramDiv {
+        margin: 2pt;
+        padding: 8pt;
+    }
+    
+    /* Reduce gap between pictograms */
+    #pictogramDiv {
+        gap: 10pt;
+        padding: 10pt 0;
+    }
+}
